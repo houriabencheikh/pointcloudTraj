@@ -159,6 +159,7 @@ add_executable(odom_visualization src/odom_visualization.cpp)
 target_link_libraries(odom_visualization
    ${catkin_LIBRARIES}
    ${ARMADILLO_LIBRARIES}
+   
 )
 
 #############

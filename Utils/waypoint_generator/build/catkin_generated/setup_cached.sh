@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# generated from catkin/python/catkin/environment_cache.py
+
+# based on a snapshot of the environment before and after calling the setup script
+# it emulates the modifications of the setup script without recurring computations
+
+# new environment variables
+
+# modified environment variables
+export CMAKE_PREFIX_PATH='/home/bertmuc/SALLI/catkin_ws/src/pointcloudTraj/Utils/waypoint_generator/build/devel:/home/bertmuc/SALLI/catkin_ws/devel_isolated/waypoint_generator:/home/bertmuc/SALLI/catkin_ws/devel_isolated/target_position:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rqt_rotors:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_simulator:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_joy_interface:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_hil_interface:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_gazebo:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_gazebo_plugins:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_evaluation:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_description:/home/bertmuc/SALLI/catkin_ws/devel_isolated/ewok_simulation:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_control:/home/bertmuc/SALLI/catkin_ws/devel_isolated/rotors_comm:/home/bertmuc/SALLI/catkin_ws/devel_isolated/pointcloudTraj:/home/bertmuc/SALLI/catkin_ws/devel_isolated/odom_visualization:/home/bertmuc/SALLI/catkin_ws/devel_isolated/airsim_ros_pkgs:/home/bertmuc/SALLI/catkin_ws/devel_isolated/quadrotor_msgs:/home/bertmuc/SALLI/catkin_ws/devel_isolated/pose_utils:/home/bertmuc/SALLI/catkin_ws/devel_isolated/octomap_rviz_plugins:/home/bertmuc/SALLI/catkin_ws/devel_isolated/mav_planning_msgs:/home/bertmuc/SALLI/catkin_ws/devel_isolated/mav_msgs:/home/bertmuc/SALLI/catkin_ws/devel_isolated/mav_comm:/home/bertmuc/SALLI/catkin_ws/devel_isolated/kdtree:/home/bertmuc/SALLI/catkin_ws/devel_isolated/forest_gen:/home/bertmuc/SALLI/catkin_ws/devel_isolated/ewok_optimization:/home/bertmuc/SALLI/catkin_ws/devel_isolated/ewok_ring_buffer:/home/bertmuc/SALLI/catkin_ws/devel_isolated/ewok_poly_spline:/home/bertmuc/SALLI/catkin_ws/devel_isolated/catkin_simple:/opt/ros/noetic:/home/bertmuc/SALLI/catkin_ws/devel_isolated/sophus'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/bertmuc/SALLI/catkin_ws/src/pointcloudTraj/Utils/waypoint_generator/build/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/bertmuc/SALLI/catkin_ws/src/pointcloudTraj/Utils/waypoint_generator:$ROS_PACKAGE_PATH"

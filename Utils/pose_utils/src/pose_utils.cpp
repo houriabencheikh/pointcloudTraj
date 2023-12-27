@@ -225,7 +225,9 @@ colvec pose_inverse_2d(const colvec& X)
   return XI;
 }
 
+
 // For Pose EKF ----------------------
+
 mat Jplus1(const colvec& X1, const colvec& X2)
 {
   colvec X3 = pose_update(X1,X2);
@@ -285,7 +287,9 @@ mat Jplus2(const colvec& X1, const colvec& X2)
   return J2;
 }
 
+
 // For IMU EKF ----------------------
+
 colvec state_update(const colvec& X, const colvec& U, double dt)
 {
   double ro = X(3);

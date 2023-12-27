@@ -144,10 +144,10 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg) {
 }
 
 void goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg) {
-    if (!is_odom_ready) {
+/*    if (!is_odom_ready) {
         ROS_ERROR("[waypoint_generator] No odom!");
         return;
-    }
+    }*/
 
     trigged_time = ros::Time::now(); //odom.header.stamp;
     //ROS_ASSERT(trigged_time > ros::Time(0));
@@ -250,9 +250,6 @@ int main(int argc, char** argv) {
     ros::Subscriber sub3 = n.subscribe("traj_start_trigger", 10, traj_start_trigger_callback);
     pub1 = n.advertise<nav_msgs::Path>("waypoints", 50);
     pub2 = n.advertise<geometry_msgs::PoseArray>("waypoints_vis", 10);
-
-    if( waypoint_type == "manual" || waypoint_type == "manual-lonely-waypoint" )
-        is_odom_ready = true;
 
     trigged_time = ros::Time(0);
 

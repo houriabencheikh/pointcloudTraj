@@ -48,7 +48,7 @@ sensor_msgs::Range         heightROS;
 string _frame_id;
 
 void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
-{ 
+{
   if (msg->header.frame_id == string("null"))
     return;
   colvec pose(6);  
@@ -60,11 +60,12 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
   q(1)    = msg->pose.pose.orientation.x;
   q(2)    = msg->pose.pose.orientation.y;
   q(3)    = msg->pose.pose.orientation.z;
-  pose.rows(3, 5) = R_to_ypr(quaternion_to_R(q));
+  pose.rows(3,5) = R_to_ypr(quaternion_to_R(q));
   colvec vel(3);
   vel(0) = msg->twist.twist.linear.x;
   vel(1) = msg->twist.twist.linear.y;
   vel(2) = msg->twist.twist.linear.z;  
+  
   if (origin && !isOriginSet)
   {
     isOriginSet = true;
@@ -90,7 +91,7 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
   poseROS.pose.orientation.y = q(2);
   poseROS.pose.orientation.z = q(3);      
   posePub.publish(poseROS);
-
+  
   // Velocity
   colvec yprVel(3);
   yprVel(0) =  atan2(vel(1), vel(0));
@@ -353,26 +354,51 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
   meshROS.color.b = color_b;
   meshROS.mesh_resource = mesh_resource;
   meshPub.publish(meshROS);                                                  
+
+  // TF for raw sensor visualization
+  if (tf45)
+  {
+    tf::Transform transform;
+    transform.setOrigin(tf::Vector3(pose(0), pose(1), pose(2)));
+    transform.setRotation(tf::Quaternion(q(1), q(2), q(3), q(0)));
+
+    tf::Transform transform45;
+    transform45.setOrigin(tf::Vector3(0, 0, 0));
+    colvec y45 = zeros<colvec>(3);
+    y45(0) = 45.0 * M_PI/180;
+    colvec q45 = R_to_quaternion(ypr_to_R(y45));  
+    transform45.setRotation(tf::Quaternion(q45(1), q45(2), q45(3), q45(0)));  
+
+    tf::Transform transform90;
+    transform90.setOrigin(tf::Vector3(0, 0, 0));
+    colvec p90 = zeros<colvec>(3);
+    p90(1) = 90.0 * M_PI/180;
+    colvec q90 = R_to_quaternion(ypr_to_R(p90));  
+    transform90.setRotation(tf::Quaternion(q90(1), q90(2), q90(3), q90(0)));  
+
+    broadcaster->sendTransform(tf::StampedTransform(transform,   msg->header.stamp, string("/world"),  string("/base")));      
+    broadcaster->sendTransform(tf::StampedTransform(transform45, msg->header.stamp, string("/base"), string("/laser")));          
+    broadcaster->sendTransform(tf::StampedTransform(transform45, msg->header.stamp, string("/base"), string("/vision")));          
+    broadcaster->sendTransform(tf::StampedTransform(transform90, msg->header.stamp, string("/base"), string("/height")));          
+  } 
 }
 
 void cmd_callback(const quadrotor_msgs::PositionCommand cmd)
 {   
-/*  colvec pose(6);  
+  if (cmd.header.frame_id == string("null"))
+    return;
+  
+  colvec pose(6);  
   pose(0) = cmd.position.x;
   pose(1) = cmd.position.y;
   pose(2) = cmd.position.z;
-*/
   colvec q(4);
   q(0)    = 1.0;
   q(1)    = 0.0;
   q(2)    = 0.0;
   q(3)    = 0.0;
+  pose.rows(3,5) = R_to_ypr(quaternion_to_R(q));
   
-  /*
-  mat r_ = quaternion_to_R(q);
-  cout<<"1.1"<<endl;
-  pose.rows(3,  5) = R_to_ypr(r_);
-  cout<<"1.2"<<endl;*/
   // Mesh model                                                  
   meshROS.header.frame_id = _frame_id;
   meshROS.header.stamp = cmd.header.stamp; 
@@ -384,13 +410,12 @@ void cmd_callback(const quadrotor_msgs::PositionCommand cmd)
   meshROS.pose.position.y = cmd.position.y;
   meshROS.pose.position.z = cmd.position.z;
  
-/*  if (cross_config)
+  if (cross_config)
   {
     colvec ypr = R_to_ypr(quaternion_to_R(q));
     ypr(0)    += 45.0*PI/180.0;
     q          = R_to_quaternion(ypr_to_R(ypr)); 
-  }  */
-
+  }  
   meshROS.pose.orientation.w = q(0);
   meshROS.pose.orientation.x = q(1);
   meshROS.pose.orientation.y = q(2);
